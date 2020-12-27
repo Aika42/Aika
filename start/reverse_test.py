@@ -12,6 +12,7 @@ def test_reverse():
     assert reverse1("a") == "a"
     assert reverse1("ab") == "ba"
     assert reverse1("abc") == "cba"
+    assert reverse1("abca") == "acba"
 
 
 test_reverse()
@@ -32,7 +33,7 @@ def test_reverse2():
 
 # Write a function that will return the number of digits in an integer.
 # You can NOT use str() to convert int into a string
-# You should use operation  // in a loop (or recursion)
+# You should use operataion  // in a loop (or recursion)
 def int_len(n: int) -> int:
     # NotImplemented
     a = 0
