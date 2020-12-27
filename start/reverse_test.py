@@ -48,3 +48,4 @@ def test_int_len():
     assert int_len(10) == 2
     assert int_len(100) == 3
     assert int_len(1111) == 4
+
