@@ -1,6 +1,8 @@
 
 ### PyCharm Setup
 
+1. Setup pytest.
+
 https://www.jetbrains.com/help/pycharm/choosing-your-testing-framework.html
 
 Open the Settings/Preferences, and under the node Tools, click the page Python Integrated Tools.
@@ -19,8 +21,8 @@ Run your tests:
 	or
 	Ctr-R
 
-
-
-
-
 --------------------
+
+2. Install "Code With Me" extension.
+
+https://blog.jetbrains.com/blog/2020/09/28/code-with-me-eap/
