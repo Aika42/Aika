@@ -100,8 +100,41 @@ def test_sum_even_not_first():
 
 
 # 10.12 Count how many words occur in a list up to and including the first occurrence of the word “sam”.
+def count_words(xs: list) -> int:
+    count = 0
+    for ch in xs:
+        if ch.lower() == 'sam':
+            return count
+        count = count + 1
+    return -1
+
+def test_count_words():
+    assert count_words(['Charles', 'Mike', 'John', 'Sam']) == 3
+    assert count_words(['Sam']) == 0
+    assert count_words(['Bob']) == -1
+
+# 10.13 Implement a Python function that works like the following: # count # in # reverse # index # insert
+def methods(xs: list):
+    print("how many 'Sam': ", xs.count("Sam"))
+    print("check whether 'Bob Marley' in list: ", 'Bob Marley' in xs)
+    xs.reverse()
+    print("list after reverse method applied: ", xs)
+    print("index of 'Sam':", xs.index('Sam'))
+    xs.insert(0, 'test')
+    print('list after insert method applied: ', xs)
+
+methods([3, False, "Sam", "Bob Marley", 11, 99])
+
+# 10.14 Write a function replace(s, old, new) that replaces all occurences of old with new in a string s
+def replace(s: str, old: str, new: str) -> str:
+
+    xs = s.split(',')
 
 
+def test_replace():
+    s = 'I love spom!  Spom is my favorite food.  Spom, spom, spom, yum!'
+    assert replace(s, 'om', 'am') == 'I love spam!  Spam is my favorite food.  Spam, spam, spam, yum!'
+    assert replace(s, 'o', 'a') == 'I lave spam!  Spam is my favarite faad.  Spam, spam, spam, yum!'
 
 
 
