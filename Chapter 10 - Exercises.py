@@ -127,14 +127,30 @@ methods([3, False, "Sam", "Bob Marley", 11, 99])
 
 # 10.14 Write a function replace(s, old, new) that replaces all occurences of old with new in a string s
 def replace(s: str, old: str, new: str) -> str:
+    xs1 = []
+    xs = s.split()
+    i = 0
+    while i < len(xs):
 
-    xs = s.split(',')
+        while old in xs[i]:
+            index = xs[i].find(old)
+            a = xs[i][:index] + new + xs[i][index + len(old):]
+            xs[i] = a
+        xs1.append(xs[i])
+        i = i + 1
+    xs1 = ' '.join(xs1)
+
+    return xs1
 
 
 def test_replace():
-    s = 'I love spom!  Spom is my favorite food.  Spom, spom, spom, yum!'
-    assert replace(s, 'om', 'am') == 'I love spam!  Spam is my favorite food.  Spam, spam, spam, yum!'
-    assert replace(s, 'o', 'a') == 'I lave spam!  Spam is my favarite faad.  Spam, spam, spam, yum!'
+    s = 'I love spom! Spom is my favorite food. Spom, spom, spom, yum!'
+
+    assert replace(s, 'o', 'a') == 'I lave spam! Spam is my favarite faad. Spam, spam, spam, yum!'
+    assert replace(s, 'om', 'am') == 'I love spam! Spam is my favorite food. Spam, spam, spam, yum!'
+    print('ok')
+
+
 
 
 
