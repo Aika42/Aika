@@ -13,24 +13,27 @@ def words():
 
     print('Your text contains {} alphabetical characters, of which {} ({}%) are "e"'.format(i, ch1, percent))
 
+
 # Print out a neatly formatted multiplication table, up to 12 x 12.
 def multtable(x: int, y: int):
 
     for i in range(1,11):
 
-        print(  '{} * {:<4} = {:<8}'.format(x, i, x*i), end='\t')
-        print( '{} * {:<4} {:<4}'.format(y, i, y*i) )
+        print()
+        for j in range(1, 11):
+            print(i, '*', j, '=', end=" ")
+            print(i * j)
 
 
 # 9.5 Write a function that will return the number of digits in an integer.
-def integdigit(x: int) -> int:
+def intdigit(x: int) -> int:
+    return len(str(abs(x)))
 
-    str1 = str(abs(x))
-    i = 0
-    while i < len(str1):
-        i = i + 1
+def test_intdigit():
+    assert intdigit(465) == 3
+    assert intdigit(43) == 2
+    assert intdigit(0) == 1
 
-    return i
 
 # 9.6 Write a function that reverses its string argument.
 def reversal(s: str) -> str:
@@ -119,26 +122,31 @@ assert removal4('bicycle', 'cycle') == 'bi'
 assert removal4('bicycle', 'icy') == 'bcle'
 assert removal4('bicycle', 'le') == 'bicyc'
 
+
 # 9.18 Write a function that implements a substitution cipher.
-# In a substitution cipher one letter is substituted for another to garble the message.
-# For example A -> Q, B -> T, C -> G etc. your function should take two parameters,
-# the message you want to encrypt, and a string that represents the mapping of the 26 letters in the alphabet.
-# Your function should return a string that is the encrypted version of the message.
+def cipher(s: str, mapping: str)->str:
 
-def code(s, mapping)->str:
+    s1 = mapping.split(',')
+    r1 = ''
 
-    list = []
-    i = 0
-    for i in mapping:
-        mapping[i] = mapping[i+3]
-        list.append(mapping[i])
-        i = i + 5
-    print(mapping[10])
-    print(list)
+    j = 0
+    while j < len(s):
+        i = 0
+        while i < len(s1):
+            if s1[i][0] == s[j]:
+                r1 = r1 + s1[i][3]
+            i = i + 1
+        j = j + 1
+    return r1
 
-mapping = 'a->x,b->y,c->t'
-assert code('a', mapping) == 'x'
-assert code('ab', mapping) == 'xy'
+def test_cipher():
+    mapping = 'a->x,b->y,c->t'
+    assert cipher('a', mapping) == 'x'
+    assert cipher('ab', mapping) == 'xy'
+    assert cipher('abba', mapping) == 'xyyx'
+    assert cipher('abcbba', mapping) == 'xytyyx'
+
+
 
 matrix = [[0, 0, 0, 1, 0],
           [0, 0, 0, 0, 0],
