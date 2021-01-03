@@ -15,7 +15,7 @@ def test_reverse():
     assert reverse1("abca") == "acba"
 
 
-test_reverse()
+# test_reverse()
 
 
 def reverse2(s: str) -> str:
@@ -44,9 +44,8 @@ def int_len(n: int) -> int:
     return a
 
 
-def test_int_len():
+def xtest_int_len():
     assert int_len(1) == 1
     assert int_len(10) == 2
     assert int_len(100) == 3
     assert int_len(1111) == 4
-
