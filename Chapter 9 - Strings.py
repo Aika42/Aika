@@ -124,7 +124,7 @@ assert removal4('bicycle', 'le') == 'bicyc'
 
 
 # 9.18 Write a function that implements a substitution cipher.
-def encrypt(s: str, mapping: str) -> str:
+def cipher(s: str, mapping: str)->str:
 
     s1 = mapping.split(',')
     r1 = ''
@@ -139,43 +139,24 @@ def encrypt(s: str, mapping: str) -> str:
         j = j + 1
     return r1
 
-def test_encrypt():
+def test_cipher():
     mapping = 'a->x,b->y,c->t'
-    assert encrypt('a', mapping) == 'x'
-    assert encrypt('ab', mapping) == 'xy'
-    assert encrypt('abba', mapping) == 'xyyx'
-    assert encrypt('abcbba', mapping) == 'xytyyx'
-
-
-# 9.19 Write a function that decrypts the message from the previous exercise.
-def decrypt(s: str, mapping: str) -> str:
-    s1 = mapping.split(',')
-    r1 = ''
-
-    j = 0
-    while j < len(s):
-        i = 0
-        while i < len(s1):
-            if s1[i][3] == s[j]:
-                r1 = r1 + s1[i][0]
-            i = i + 1
-        j = j + 1
-    return r1
-
-
-def test_decrypt():
-    mapping2 = 'a->x,b->y,c->t'
-    assert decrypt('x', mapping2) == 'a'
-    assert decrypt('xy', mapping2) == 'ab'
-    assert decrypt('xyyx', mapping2) == 'abba'
-    assert decrypt('xytyyx', mapping2) == 'abcbba'
-    print('ok')
+    assert cipher('a', mapping) == 'x'
+    assert cipher('ab', mapping) == 'xy'
+    assert cipher('abba', mapping) == 'xyyx'
+    assert cipher('abcbba', mapping) == 'xytyyx'
 
 
 
+matrix = [[0, 0, 0, 1, 0],
+          [0, 0, 0, 0, 0],
+          [0, 2, 0, 0, 0],
+          [0, 0, 0, 0, 0],
+          [0, 0, 0, 3, 0]]
 
+matrix1 = {(0,3): 1, (2,1): 2, (4,3): 3}
 
-
+matrix == matrix1
 
 
 
