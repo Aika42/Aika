@@ -170,6 +170,7 @@ def test_decrypt():
     assert decrypt('xyyx', mapping2) == 'abba'
     assert decrypt('xytyyx', mapping2) == 'abcbba'
     print('ok')
+    print('test')
 
 
 
