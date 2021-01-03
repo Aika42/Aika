@@ -1,3 +1,4 @@
+# Review: OK
 def words():
     text = "I will be running in January!!! and I will move close to the mountains in 2021!!!"
 
@@ -18,7 +19,15 @@ def words():
     )
 
 
+# words()
+
 # Print out a neatly formatted multiplication table, up to 12 x 12.
+# Review: NO
+# 1 2 3  4
+# 2 4 6  8
+# 3 6 9  12
+# 4 8 12 16
+# # Notice that columns are aligned
 def multtable(x: int, y: int):
 
     for i in range(1, 11):
@@ -29,12 +38,15 @@ def multtable(x: int, y: int):
             print(i * j)
 
 
+# multtable(11, 11)
+
 # 9.5 Write a function that will return the number of digits in an integer.
+# Review: OK
 def intdigit(x: int) -> int:
     return len(str(abs(x)))
 
 
-def test_intdigit():
+def xtest_intdigit():
     assert intdigit(465) == 3
     assert intdigit(43) == 2
     assert intdigit(0) == 1
@@ -49,6 +61,29 @@ def reversal(s: str) -> str:
         newstring = newstring + s[i]
         i = i - 1
     return newstring
+
+
+# Additional Ex:
+# Write a function that reverses its string in place.
+# Here are tests
+
+
+def reverse_in_place(s: str) -> None:
+    pass
+
+
+def test_reverse_in_place():
+    s = ""
+    reverse_in_place(s)
+    assert s == ""
+
+    s = "ab"
+    reverse_in_place(s)
+    assert s == "ba"
+
+    s = "abc"
+    reverse_in_place(s)
+    assert s == "cba"
 
 
 # 9.7 Write a function that mirrors its string argument, generating a string containing the original string and the string backwards.
@@ -67,6 +102,11 @@ def removal(s: str, r: str) -> str:
     return s1
 
 
+# Review: OK
+# Additional Ex:
+# make a recursive solution of removal.
+# add tests
+
 # 9.9 Write a function that recognizes palindromes.
 def palindrome(s: str) -> bool:
     if reversal(s) == s:
@@ -74,6 +114,7 @@ def palindrome(s: str) -> bool:
     return False
 
 
+# Review: put asserts in test function
 assert palindrome("kayak") == True
 assert palindrome("Wolf") == False
 
@@ -87,11 +128,20 @@ def substring(s: str, r: str) -> bool:
     return False
 
 
+# Review: NO
+# Write tests.
+# test_substring1() is added already
 def substring1(s: str, r: str) -> int:
 
     if substring(s, r):
         return len(r)
     return -1
+
+
+def test_substring1():
+    s = "abca"
+    r = "a"
+    assert substring1(s, r) == 2
 
 
 # 9.11 Write a function that removes the first occurrence of a string from another string.
@@ -105,6 +155,9 @@ def removal2(s: str, r: str) -> str:
     return -1
 
 
+# Review:
+# Write tests for your solution
+
 # Example from book
 def remove3(substr, theStr):
     index = theStr.find(substr)
@@ -114,6 +167,7 @@ def remove3(substr, theStr):
     return return_str
 
 
+# Review: put asserts in test function
 assert remove3("an", "banana") == "bana"
 assert remove3("cyc", "bicycle") == "bile"
 
