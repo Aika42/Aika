@@ -12,14 +12,10 @@ def words():
 
     percent = ch1 * 100 / i
 
-    print(
-        'Your text contains {} alphabetical characters, of which {} ({}%) are "e"'.format(
-            i, ch1, percent
-        )
-    )
+    print('Your text contains {} alphabetical characters, of which {} ({}%) are "e"'.format(i, ch1, percent))
 
 
-# words()
+words()
 
 # Print out a neatly formatted multiplication table, up to 12 x 12.
 # Review: NO
@@ -28,17 +24,18 @@ def words():
 # 3 6 9  12
 # 4 8 12 16
 # # Notice that columns are aligned
-def multtable(x: int, y: int):
-
-    for i in range(1, 11):
-
+def multtable():
+    for j in range(2,10):
+        for i in range(2,6):
+            print(i,'x',j,'=',i*j,end=''.ljust(12 - len(str(i*j))))
         print()
-        for j in range(1, 11):
-            print(i, "*", j, "=", end=" ")
-            print(i * j)
+    print()
+    for j in range(2,10):
+        for i in range(6,10):
+            print(i,'x',j,'=',i*j,end=''.ljust(12 - len(str(i*j))))
+        print()
 
-
-# multtable(11, 11)
+multtable()
 
 # 9.5 Write a function that will return the number of digits in an integer.
 # Review: OK
@@ -62,6 +59,7 @@ def reversal(s: str) -> str:
         i = i - 1
     return newstring
 
+reversal('ab')
 
 # Additional Ex:
 # Write a function that reverses its string in place.
@@ -69,10 +67,16 @@ def reversal(s: str) -> str:
 
 
 def reverse_in_place(s: str) -> None:
-    pass
+    l = list(s)
+    m = len(s)
+
+    for i in range(m//2):
+        l[i],l[m-(i+1)] = l[m-(i+1)],l[i]
+
+    s = ''.join(l)
 
 
-def test_reverse_in_place():
+def xtest_reverse_in_place():
     s = ""
     reverse_in_place(s)
     assert s == ""
@@ -101,11 +105,30 @@ def removal(s: str, r: str) -> str:
 
     return s1
 
+def test_removal():
+    assert removal('banana', 'a') == 'bnn'
+    assert removal('blablabla', 'b') =='lalala'
+    assert removal('', 'b') == ''
+
 
 # Review: OK
 # Additional Ex:
 # make a recursive solution of removal.
 # add tests
+def removal2(s: str, r: str) -> str:
+    if len(s) < 1:
+        return ''
+    h, t = s[0], s[1:]
+
+    if h == r:
+        return removal2(t, r)
+    return h + removal2(t, r)
+
+def test_removal2():
+    assert removal2('banana', 'a') == 'bnn'
+    assert removal2('blablabla', 'b') =='lalala'
+    assert removal2('', 'b') == ''
+
 
 # 9.9 Write a function that recognizes palindromes.
 def palindrome(s: str) -> bool:
@@ -132,12 +155,15 @@ def substring(s: str, r: str) -> bool:
 # Write tests.
 # test_substring1() is added already
 def substring1(s: str, r: str) -> int:
+    s3 = ''
+    for ch in s:
+        for ch1 in r:
+            if ch1 != ch:
+                s3 = s3 + ch
+    return len(s3)
 
-    if substring(s, r):
-        return len(r)
-    return -1
 
-
+substring1('abca', 'a')
 def test_substring1():
     s = "abca"
     r = "a"
@@ -150,11 +176,17 @@ def removal2(s: str, r: str) -> str:
     i = 0
     while i < len(s):
         if s[i] == r:
-            return s[:i] + s[i + 1 :]
+            return s[:i] + s[i + 1:]
+
         i = i + 1
-    return -1
+    return s
 
+def test_removal2():
+    assert removal2('banana', 'a') == 'bnana'
+    assert removal2('t', '') == 't'
+    assert removal2('', 'b') == ''
 
+test_removal2()
 # Review:
 # Write tests for your solution
 
@@ -168,8 +200,11 @@ def remove3(substr, theStr):
 
 
 # Review: put asserts in test function
-assert remove3("an", "banana") == "bana"
-assert remove3("cyc", "bicycle") == "bile"
+def test_remove3():
+    assert remove3("an", "banana") == "bana"
+    assert remove3("cyc", "bicycle") == "bile"
+
+test_remove3()
 
 # 9.12 Write a function that removes all occurrences of a string from another string.
 def removal4(s: str, r: str) -> str:
@@ -182,10 +217,10 @@ def removal4(s: str, r: str) -> str:
             i = i + 1
     return -1
 
-
-assert removal4("bicycle", "cycle") == "bi"
-assert removal4("bicycle", "icy") == "bcle"
-assert removal4("bicycle", "le") == "bicyc"
+def test_removal4():
+    assert removal4("bicycle", "cycle") == "bi"
+    assert removal4("bicycle", "icy") == "bcle"
+    assert removal4("bicycle", "le") == "bicyc"
 
 
 # 9.18 Write a function that implements a substitution cipher.
