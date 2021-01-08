@@ -4,46 +4,34 @@ def plotRegression():
     for line in f:
         d[line[0:2]] = line[3:5]
 
-    mX, mY = 0, 0
-    n = 0
+    k = []
+    v = []
     sumXY = 0
-    sumX = 0
-    minX, minY = 100, 100
-    maxX, maxY = -1, -1
 
     for key, value in d.items():
 
-        n = n + 1
-        mX = mX + int(key)
-        mY = mY + int(value)
-
+        k.append(int(key))
+        v.append(int(value))
         sumXY = sumXY + int(key)*int(value)
 
-        sq_sumX = sumX + int(key)**2
 
-        if int(key) < minX:
-            minX = int(key)
 
-        if int(value) < minY:
-            minY = int(value)
+    sq_sumX = sum([i**2 for i in k])
+    maxX, maxY = max(k), max(k)
+    minX, minY = min(v), min(v)
 
-        if int(key) > maxX:
-            maxX = int(key)
-
-        if int(value) > maxY:
-            maxY = int(value)
+    mX = sum(k)
+    mY = sum(v)
+    n = len(k)
 
     meanX = mX / n
     meanY = mY / n
     m = (sumXY - n * meanX * meanY) / (sq_sumX - n * meanX**2)
 
-    return minX, maxX, minY, maxY, m, meanX, meanY
+    return minX, maxX, minY, maxY, m, meanX, meanY, d
 
 
-
-f = plotRegression()
-
-def fred(f):
+def plotRegression():
 
     minX, maxX, minY, maxY, m, meanX, meanY = f
 
@@ -51,12 +39,32 @@ def fred(f):
     wn = turtle.Screen()
     wn.setworldcoordinates(minX-10, minY-10, maxX+10, maxY+10)
 
-    fred1 = turtle.Turtle()
+    fred = turtle.Turtle()
 
-    for x in range(minX, maxX, 2):
-        y = meanY + m * (x-meanX)
-        fred1.goto(x,y)
+    # draw coordinates
+    fred.up()
+    fred.goto(minX-5, minY-5)
+    fred.down()
+    fred.goto(maxX+5, minY-5)
+    fred.goto(minX-5, minY-5)
+    fred.goto(minX-5, maxY+5)
+
+    # plot Regression
+    fred.up()
+    fred.goto(minX, y(minX))
+    fred.down()
+    fred.goto(maxX, y(maxY))
+
+    # points
+    for i,j in d.items():
+        i = int(i)
+        j = int(j)
+        fred.up()
+        fred.goto(i,j)
+        fred.down()
+        fred.stamp()
+
 
     wn.exitonclick()
 
-fred(f)
+plotRegression()
