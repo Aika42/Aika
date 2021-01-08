@@ -16,7 +16,7 @@ def calc_coef(points):
     return minX, maxX, minY, maxY, m, meanX, meanY
 
 
-def test_plotRegression():
+def plotRegression():
     # load points
     points = {}
     with open("./labdata.txt") as f:
@@ -61,4 +61,4 @@ def test_plotRegression():
     wn.exitonclick()
 
 
-# plotRegression()
+plotRegression()
