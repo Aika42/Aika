@@ -173,3 +173,34 @@ def test_replace():
         == "I love spam! Spam is my favorite food. Spam, spam, spam, yum!"
     )
     print("ok")
+
+
+# Exercise 10.18.2. Accumulating a String Result
+def accumulating_string():
+    scores = [85, 95, 70]
+
+    a = ([str(score) for score in scores])
+    b = ', '.join(a[:2])
+    c = ', '.join(a[2:])
+
+    print('The scores are', b+', and',c+'.')
+
+
+# past tense
+def past_tense():
+    words = ["adopt", "bake", "beam", "confide", "grill", "plant", "time", "wave", "wish", 'assisted']
+    past_tense = []
+    for word in words:
+        if word[len(word)-1] == 'e':
+            new_word = word+'d'
+            past_tense.append(new_word)
+        elif word[(len(word)-2):] != 'ed':
+            new_word = word+'ed'
+            past_tense.append(new_word)
+        else:
+            past_tense.append(word)
+    return past_tense
+
+#past_tense()
+
+
