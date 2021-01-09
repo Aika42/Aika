@@ -7,6 +7,7 @@ def mystery():
     with open('Mystery.txt') as f:
         for l in f:
             points = l.split()
+
             if points[0] == 'UP':
                 t.up()
             elif points[0] == 'DOWN':
@@ -19,4 +20,5 @@ def mystery():
 
 
 mystery()
+
 

@@ -1,62 +1,76 @@
-def calc_coef(points):
-    k = points.keys()
-    v = points.values()
-    sumXY = sum(x * y for x, y in points.items())
-    sq_sumX = sum([i ** 2 for i in k])
+def calc_coef():
+    sum, sum_sqx = 0, 0
+    maxX, maxY = 0, 0
+    minX, minY = 100, 100
+    n = 0
+    sum_x, sum_y = 0, 0
 
-    maxX, maxY = max(k), max(v)
-    minX, minY = min(k), min(v)
+    xs = []
 
-    n = len(k)
-
-    meanX = sum(k) / n
-    meanY = sum(v) / n
-    m = (sumXY - n * meanX * meanY) / (sq_sumX - n * meanX ** 2)
-
-    return minX, maxX, minY, maxY, m, meanX, meanY
-
-
-def plotRegression():
-    # load points
-    points = {}
     with open("labdata.txt") as f:
         for l in f:
-            points[int(l[0:2])] = int(l[3:5])
+            points = l.split()
+            x = int(points[0])
+            y = int(points[1])
+            xs.append([x, y])
 
-    minX, maxX, minY, maxY, m, meanX, meanY = calc_coef(points)
+            sum = sum + x*y
+            sum_sqx = sum_sqx + x**2
+
+            sum_x = sum_x + x
+            sum_y = sum_y + y
+
+            if maxX < x:
+                maxX = x
+            if maxY < y:
+                maxY = y
+            if minX > x:
+                minX = x
+            if minY > y:
+                minY = y
+
+            n = n + 1
+    print(xs)
+    meanX = sum_x / n
+    meanY = sum_y / n
+
+    m = (sum - n * meanX * meanY) / (sum_sqx - n * meanX ** 2)
+
+    return meanX, meanY, maxX, maxY, minX, minY, m, xs
+
+def plotRegression():
+
+    meanX, meanY, maxX, maxY, minX, minY, m, xs  = calc_coef()
 
     def y(x):
         return meanY + m * (x - meanX)
 
     import turtle
-
+    t = turtle.Turtle()
     wn = turtle.Screen()
     wn.setworldcoordinates(minX - 10, minY - 10, maxX + 10, maxY + 10)
 
-    fred = turtle.Turtle()
-
     # draw coordinates
-    fred.up()
-    fred.goto(minX - 5, minY - 5)
-    fred.down()
-    fred.goto(maxX + 5, minY - 5)
-    fred.goto(minX - 5, minY - 5)
-    fred.goto(minX - 5, maxY + 5)
+    t.speed(10)
+    t.up()
+    t.goto(minX - 5, minY - 5)
+    t.down()
+    t.goto(maxX + 5, minY - 5)
+    t.goto(minX - 5, minY - 5)
+    t.goto(minX - 5, maxY + 5)
 
     # plot Regression
-    fred.up()
-    fred.goto(minX, y(minX))
-    fred.down()
-    fred.goto(maxX, y(maxY))
+    t.up()
+    t.goto(minX, y(minX))
+    t.down()
+    t.goto(maxX, y(maxY))
 
     # points
-    for i, j in points.items():
-        i = int(i)
-        j = int(j)
-        fred.up()
-        fred.goto(i, j)
-        fred.down()
-        fred.stamp()
+    for i in range(len(xs)):
+        t.up()
+        t.goto(xs[i][0], xs[i][1])
+        t.down()
+        t.stamp()
 
     wn.exitonclick()
 

@@ -13,8 +13,10 @@ def calc_coeff():
         k.append(int(key))
         v.append(int(value))
         sumXY = sumXY + int(key)*int(value)
+    print('wrong sumXY', sumXY)
 
     sq_sumX = sum([i**2 for i in k])
+    print('wrong sq_sumX is as well', sq_sumX)
     maxX, maxY = max(k), max(k)
     minX, minY = min(v), min(v)
 
@@ -28,7 +30,7 @@ def calc_coeff():
 
     return minX, maxX, minY, maxY, m, meanX, meanY, d
 
-
+calc_coeff()
 def plotRegression():
 
     minX, maxX, minY, maxY, m, meanX, meanY, d = calc_coeff()
