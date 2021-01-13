@@ -1,0 +1,4 @@
+I just want to test this text document. Such as how many words of different characters etc.
+Yeah, just wanna test these in Python.
+Today it is slightly colder than days before, a little strong wind.
+Also, need to search for an apartment.
