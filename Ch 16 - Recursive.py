@@ -65,22 +65,21 @@ import random
 
 def tree(branchLen,t):
     if branchLen > 5:
-        if branchLen == 15:
-            t.width(3)
+        t.width(branchLen//10)
+        if branchLen < 20:
             t.color('green')
         else:
-            t.width(8)
             t.color("brown")
 
-        angle = random.randrange(15,45, 15)
-        r = random.randrange(10,15, 1)
+        angle = random.randrange(15,45)
+        r = random.randrange(10,15)
 
         t.forward(branchLen)
-        t.right(20)
-        tree(branchLen-15,t)
-        t.left(40)
-        tree(branchLen-15,t)
-        t.right(20)
+        t.right(angle)
+        tree(branchLen-r,t)
+        t.left(angle+angle)
+        tree(branchLen-r,t)
+        t.right(angle)
         t.backward(branchLen)
 
 def main():
