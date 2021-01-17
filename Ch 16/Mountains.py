@@ -2,62 +2,49 @@ import math
 import random
 import turtle
 
-def mountains(x1, y1, x2, y2):
-    t = turtle.Turtle()
-    w = turtle.Screen()
+t = turtle.Turtle()
+w = turtle.Screen()
+w.screensize(1500,1500, 'light blue')
 
-    x3, y3 = values(-45, 45, x1, x2, y1, y2)
+MIN_D = 10
+MAXTAN = 70
 
-    d1 = x3 - x1
-    d2 = x2 - x3
-
-    if d1 < 25:
-        t.up()
-        t.goto(x1,y1)
-        t.down()
-        t.goto(x3,y3)
-        return
+def m(p1, p2):
+    if dist(p1,p2) < MIN_D:
+        t.goto(p2)
     else:
-        mountains(x1, y1, x3, y3)
+        p3 = findP(p1,p2)
+        m(p1,p3)
+        m(p3,p2)
 
-    if d2 < 25:
-        t.up()
-        t.goto(x3, y3)
-        t.down()
-        t.goto(x2, y2)
-        return
-    else:
-        mountains(x3, y3, x2, y2)
+def dist(p1,p2):
+    x1, y1 = p1
+    x2, y2 = p2
 
+    return ((x2 - x1)**2 + (y2 - y1)**2)**0.5
 
-    w.exitonclick()
+def findP(p1, p2)->tuple:
+    x1, y1 = p1
+    x2, y2 = p2
 
+    x3 = random.uniform(x1, x2)
+    tn = math.tan(math.radians(MAXTAN))
 
+    y_up = min(y1 + (x3 - x1)*tn, y2 + (x2 - x3)*tn)
+    y_dw = max(y1 - (x3 - x1)*tn, y2 - (x2 - x3)*tn)
+    y_min = 0
+    y_d = max(y_min, y_dw)
+    print(x1, x3,x2, y_up, y_dw)
 
-def values(smin, smax, x1, x2, y1, y2):
+    y3 = random.uniform(y_d,y_up)
 
-    x3 = random.randrange(x1,x2)
+    return int(x3),int(y3)
 
-    y_up1 = y1 + (x3 - x1)* math.tan(math.radians(smax)) # from y1 to max y3
-    y_up2 = y1 + (x2 - x3)* math.tan(math.radians(smax)) # from y2 to max y3
-    y_up = int(min(y_up2, y_up1))
+p1 = -400,0
+p2 = 400,0
+t.up()
+t.goto(p1)
+t.down()
+m(p1, p2)
 
-
-    y_dw1 = y2 + (x3 - x1)* math.tan(math.radians(smin)) # from y2 to min y3
-    y_dw2 = y2 + (x2 - x3)* math.tan(math.radians(smin)) # from y2 to min y3
-    y_dw = int(min(y_dw2, y_dw1))
-
-    print("y_dw and y_up are ", y_dw, y_up)
-
-    y3 = random.randrange(y_dw, y_up)
-
-    print("x3 and y3 are ", x3, y3)
-
-    return x3, y3
-
-x1, x2 = 10, 400
-y1, y2 = 85, 150
-mountains(x1, x2, y1, y2)
-
-
-
+w.exitonclick()
