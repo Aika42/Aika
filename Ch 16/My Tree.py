@@ -6,11 +6,14 @@ def tree(branch, t):
         t.color('brown')
     else:
         t.color('green')
-    if branch > 5:
+    if branch > 20:
         t.forward(branch)
-        t.right(random.randrange(15,45))
-        tree(branch-20, t)
-        t.left(random.randrange(15,45)*2)
+        t.right(20)
+        tree(branch-20,t)
+        t.backward(branch)
+        t.left(40)
+        tree(branch-20,t)
+
 
 
 def tur():
@@ -23,9 +26,8 @@ def tur():
 
     t.left(90)
 
-    tree(100, t)
-
-
-
+    tree(60, t)
 
     w.exitonclick()
+
+tur()
