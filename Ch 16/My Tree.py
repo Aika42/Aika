@@ -1,31 +1,22 @@
 import turtle
-import random
+MIN_LEN = 20
 
-def tree(branch, t):
-    if branch > 30:
-        t.color('brown')
-    else:
-        t.color('green')
-    if branch > 20:
-        t.forward(branch)
-        t.right(20)
-        tree(branch-10,t)
-        t.left(20)
-        t.backward(branch)
-        #t.left(20)
-
-
-
-
+def tree(branchlen, t):
+    """tree = branch with two other smaller trees"""
+    if branchlen < MIN_LEN:
+        return
+    t.forward(branchlen)
+    t.right(20)
+    tree(branchlen-10, t)
+    t.left(20*2)
+    tree(branchlen-10, t)
+    t.right(20)
+    t.backward(branchlen)
 
 
 def tur():
     t = turtle.Turtle()
     w = turtle.Screen()
-
-    t.up()
-    t.goto(0,-100)
-    t.down()
 
     t.left(90)
 
