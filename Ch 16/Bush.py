@@ -8,7 +8,7 @@ def bush(bushlen, t):
     t.left(60)
     t.forward(bushlen)
     bush(bushlen-20, t)
-    #t.left(30)
+    #t.left(60)
     t.backward(bushlen)
 
     t.right(60)
