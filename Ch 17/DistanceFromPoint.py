@@ -26,12 +26,24 @@ class Point:
 # Add a method slope_from_origin which returns the slope of the line joining the origin to the point.
 # What cases will cause your method to fail? Return None when it happens.
     def slope_from_origin(self):
-        if self.y == 0:
+        if self.x == 0:
             return None
-        return self.y / self.x
+        else:
+            return int(self.y / self.x)
 
+
+    def get_line_to(self, p):
+        # y = mx + c; m - gradient, c - y intersect
+        m = (p.getY() - self.y)/(p.getX() - self.x)
+        c = self.y - m * self.x
+
+        return int(m), int(c)
+
+print(Point(4, 11).get_line_to(Point(6, 15)))
 
 a = Point(2,6)
-a.slope_from_origin()
+print(a.slope_from_origin())
+
+
 
 
