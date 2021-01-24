@@ -16,11 +16,6 @@ class Point:
         return self.y
 
 
-
-a = Point(1,2)
-
-
-
 class Rectangle:
 
     def __init__(self, initP, initW, initH):
@@ -44,9 +39,34 @@ class Rectangle:
         return self.W + self.H + self.W + self.H
 
     def transpose(self):
+        temp = self.W
         self.W = self.H
-        self.H = self.W
+        self.H = temp
+
+    def contains(self, P):
+        if P.getY() < self.H and P.getX() and P.getY() >= 0 and P.getX() >= 0:
+            return True
+        else:
+            return False
 
 
-b = Rectangle(a, 6, 4)
-b.getHeight()
+
+def test():
+    b = Rectangle(Point(0,0), 6, 4)
+    assert b.H == 4
+    assert b.getWidth() == 6
+    b.transpose()
+    assert b.H == 6
+    assert b.getWidth() == 4
+    print("OK")
+
+    c = Rectangle(Point(0,0), 8, 10)
+    assert c.contains(Point(1,1)) == True
+    assert c.contains(Point(1,0)) == True
+    assert c.contains(Point(9,9)) == False
+    print('tested')
+
+
+test()
+
+
