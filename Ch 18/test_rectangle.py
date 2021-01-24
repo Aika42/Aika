@@ -1,20 +1,7 @@
+
 # r = Rectangle(Point(4, 5), 6, 5). location of lower corner (4,5), width 6 and height 5
 
-class Point:
-    """Point class shows point coordinates in x, y """
-    def __init__(self, initX, initY):
-        self.x = initX
-        self.y = initY
-
-    def __str__(self):
-        return "("+str(self.x)+", "+str(self.y)+")"
-
-    def getX(self):
-        return self.x
-
-    def getY(self):
-        return self.y
-
+from point import Point
 
 class Rectangle:
 
@@ -43,11 +30,11 @@ class Rectangle:
         self.W = self.H
         self.H = temp
 
-    def contains(self, P):
-        if P.getY() < self.H and P.getX() and P.getY() >= 0 and P.getX() >= 0:
-            return True
-        else:
-            return False
+    def contains(self, p: Point):
+        return p.getY() < self.H + self.P.getY() and p.getX() < self.W + self.P.getX() and p.getY() >= self.P.getY() and p.getX() >= self.P.getX()
+
+    def diagonal(self):
+        return (self.W**2 + self.H**2)**0.5
 
 
 
@@ -62,11 +49,14 @@ def test():
 
     c = Rectangle(Point(0,0), 8, 10)
     assert c.contains(Point(1,1)) == True
-    assert c.contains(Point(1,0)) == True
-    assert c.contains(Point(9,9)) == False
-    print('tested')
 
 
-test()
+def test_0():
+    c = Rectangle(Point(10,5), 2, 2)
+    assert not c.contains(Point(1,1))
+    assert c.contains(Point(11,6))
+
+    assert c.diagonal() == 8**0.5
+
 
 
