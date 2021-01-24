@@ -1,7 +1,7 @@
-
 # r = Rectangle(Point(4, 5), 6, 5). location of lower corner (4,5), width 6 and height 5
 
 from point import Point
+
 
 class Rectangle:
 
@@ -11,12 +11,12 @@ class Rectangle:
         self.H = initH
 
     def __str__(self):
-        return 'Rectangle '+str(self.P)+', '+str(self.W)+', '+str(self.H)
+        return 'Rectangle ' + str(self.P) + ', ' + str(self.W) + ', ' + str(self.H)
 
-    def getWidth(self):
+    def getwidth(self):
         return self.W
 
-    def getHeight(self):
+    def getheight(self):
         return self.H
 
     def area(self):
@@ -31,32 +31,28 @@ class Rectangle:
         self.H = temp
 
     def contains(self, p: Point):
-        return p.getY() < self.H + self.P.getY() and p.getX() < self.W + self.P.getX() and p.getY() >= self.P.getY() and p.getX() >= self.P.getX()
+        return self.H + self.P.getY() > p.getY() >= self.P.getY() and self.W + self.P.getX() > p.getX() >= self.P.getX()
 
     def diagonal(self):
-        return (self.W**2 + self.H**2)**0.5
-
+        return (self.W ** 2 + self.H ** 2) ** 0.5
 
 
 def test():
-    b = Rectangle(Point(0,0), 6, 4)
+    b = Rectangle(Point(0, 0), 6, 4)
     assert b.H == 4
-    assert b.getWidth() == 6
+    assert b.getwidth() == 6
     b.transpose()
     assert b.H == 6
-    assert b.getWidth() == 4
+    assert b.getwidth() == 4
     print("OK")
 
-    c = Rectangle(Point(0,0), 8, 10)
-    assert c.contains(Point(1,1)) == True
+    c = Rectangle(Point(0, 0), 8, 10)
+    assert c.contains(Point(1, 1))
 
 
 def test_0():
-    c = Rectangle(Point(10,5), 2, 2)
-    assert not c.contains(Point(1,1))
-    assert c.contains(Point(11,6))
+    c = Rectangle(Point(10, 5), 2, 2)
+    assert not c.contains(Point(1, 1))
+    assert c.contains(Point(11, 6))
 
-    assert c.diagonal() == 8**0.5
-
-
-
+    assert c.diagonal() == 8 ** 0.5
