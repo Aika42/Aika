@@ -7,6 +7,9 @@ class Point:
         self.x = initX
         self.y = initY
 
+    def __str__(self):
+        return str(self.x) + "," + str(self.y)
+
     def getX(self):
         return self.x
 
@@ -39,10 +42,21 @@ class Point:
 
         return int(m), int(c)
 
-print(Point(4, 11).get_line_to(Point(6, 15)))
+    def move(self, dx, dy):
+        return Point(self.x + dx, self.y + dy)
+
+    #Given three points that fall on the circumference of a circle,
+    # find the center and radius of the circle.
+
+
 
 a = Point(2,6)
-print(a.slope_from_origin())
+
+b = a.move(1,3)
+print(a)
+print(b)
+
+
 
 
 
