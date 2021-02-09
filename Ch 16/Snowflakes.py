@@ -1,42 +1,18 @@
-def snowflake(n, t):
-    """forward, left(60), forward, right(120), forward, left(60)"""
-    t.left(60)
-    t.forward(100)
-    t.right(120)
-    t.forward(100)
-    t.right(120)
-    t.forward(100)
-
-    t.up()
-    t.backward(50)
-    t.down()
-
-    t.right(60)
-    t.forward(100)
-    t.right(120)
-    t.forward(100)
-    t.right(120)
-    t.forward(100)
+# Draw a Koch snowflake
+from turtle import *
 
 
+def koch(a, order):
+    if order > 0:
+        for t in [60, -120, 60, 0]:
+            koch(a/3, order-1)
+            left(t)
+    else:
+        forward(a)
 
-
-def t():
-    import turtle
-    wn = turtle.Screen()
-    t = turtle.Turtle()
-
-    t.up()
-    t.goto(-100,-100)
-    t.down()
-
-    t.speed(1)
-
-    snowflake(3, t)
-
-
-
-    wn.exitonclick()
-
-t()
+# Test
+koch(100, 0)
+pensize(3)
+speed(1)
+koch(100, 2)
 
