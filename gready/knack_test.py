@@ -7,6 +7,12 @@ def power_set(xs: 'List[Itme]') -> 'List[Itme]':
 
 
 def knapsack(xs: 'List[Item]', w: float) -> 'List[Item]':
+    """
+    Solution(items: List[Item], constr: float) -> Bag:
+        1. create all possible bags
+        2. select (filter) bags with weight <= constr
+        3. select the best bag - a bag such that sum of items' value is max
+    """
     def sum_w(xs) -> float:
         return sum(x[0] for x in xs)
 
