@@ -37,7 +37,7 @@ def test_my_max():
     assert my_max(['ab', 'cbab'], key=lambda s: s.count('b')) == 'cbab'
 
     # make fun that make func that find max by given key
-    def make_mymax(key: '(object)->Comaprable') -> object:
+    def make_mymax(key: '(object)->Comaprable') -> '(List[object])->object':
         def f(xs):
             return max(xs, key=key)
 
@@ -63,6 +63,43 @@ def test_my_max():
     assert best(['abc', 'acc']) == 'acc'
     assert best(['abc', 'ccc']) == 'ccc'
     assert best(['cba', 'cbx']) == 'cbx'
+
+
+def test_reduce():
+    # make function my_reduce that works like functools.reduce
+    # https://realpython.com/python-reduce-function/
+    # https://docs.python.org/3/library/functools.html
+
+    def my_reduce(func: '(acc: object, obj: object)-> obj', init: object,
+                  xs: 'List[object]') -> object:
+        acc = init
+        for x in xs:
+            acc = func(acc, x)
+        return acc
+
+    def plus(a, b):
+        return a + b
+
+    assert my_reduce(plus, 0, [1, 2, 3]) == 6
+    assert my_reduce(plus, 10, [1, 2, 3, 4]) == 20
+
+    def mul(a, b):
+        return a * b
+
+    assert my_reduce(mul, 1, [1, 2, 3]) == 6
+    assert my_reduce(mul, 10, [1, 2, 3, 4]) == 240
+
+    # make func rmax using function my_reduce
+    def rmax(xs: 'List[object]', key: '(object)->Comaprable') -> object:
+        return my_reduce(lambda acc, x: acc
+                         if key(acc) >= key(x) else x, xs[0], xs)
+
+    def key_b(s):
+        return s.count('b')
+
+    assert rmax(['a', 'c'], key=key_b) == 'a'
+    assert rmax(['a', 'abab', 'ba'], key=key_b) == 'abab'
+    assert rmax(['a', 'abab', 'ba', 'bbbc'], key=key_b) == 'bbbc'
 
 
 #
