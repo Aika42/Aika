@@ -67,16 +67,13 @@ def test_iterative0():
     assert got == 5
 
 
-def recursive(cs: tuple, amount: int) -> int:
-    def S(ci: int, n: int) -> int:
-        if n == 0:
-            return 1
-        if n < 0 or ci >= len(cs):
-            return 0
+def recursive(cs: list, amount: int) -> int:
+    if amount == 0:
+        return 1
+    if amount < 0 or len(cs) < 1:
+        return 0
 
-        return S(ci, n - cs[ci]) + S(ci + 1, n)
-
-    return S(0, amount)
+    return recursive(cs, amount - cs[0]) + recursive(cs[1:], amount)
 
 
 def test_recursive():
