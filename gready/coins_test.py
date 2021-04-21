@@ -67,6 +67,57 @@ def test_iterative0():
     assert got == 5
 
 
+def recursive(cs: tuple, amount: int) -> int:
+    def S(ci: int, n: int) -> int:
+        if n == 0:
+            return 1
+        if n < 0 or ci >= len(cs):
+            return 0
+
+        return S(ci, n - cs[ci]) + S(ci + 1, n)
+
+    return S(0, amount)
+
+
+def test_recursive():
+    got = recursive((1, 2), 3)
+    assert got == 2
+    got = recursive((1, 2, 3), 4)
+    assert got == 4
+    got = recursive((2, 5, 3, 6), 10)
+    assert got == 5
+
+
+def recursive_cached(cs: tuple, amount: int) -> int:
+    cache = {}
+
+    def S(ci: int, n: int) -> int:
+        key = (ci, n)
+        res = cache.get(key)
+        if res:
+            return res
+
+        if n == 0:
+            return 1
+        if n < 0 or ci >= len(cs):
+            return 0
+
+        res = S(ci, n - cs[ci]) + S(ci + 1, n)
+        cache[key] = res
+        return res
+
+    return S(0, amount)
+
+
+def test_recursive_cached():
+    got = recursive_cached((1, 2), 3)
+    assert got == 2
+    got = recursive_cached((1, 2, 3), 4)
+    assert got == 4
+    got = recursive_cached((2, 5, 3, 6), 10)
+    assert got == 5
+
+
 def test_2d_array():
     a = [[0] * 2] * 3
     assert a[0][0] == 0 and a[1][0] == 0
