@@ -126,6 +126,54 @@ def test_lcs_all():
     assert lcs_all('ABCBDAB', 'BDCABA') == {'BCAB', 'BCBA', 'BDAB'}
 
 
+def test_lcs_all_cache():
+    # https://www.techiedelight.com/longest-common-subsequence-finding-lcs/
+
+    def lcs_all(xs: str, ys: str) -> 'set[ str ]':
+
+        cache = {}
+
+        def S(x, y) -> 'set[str]':
+            if x >= len(xs) or y >= len(ys):
+                return {''}
+
+            key = str(x) + ':' + str(y)
+            res = cache.get(key)
+            if res:
+                return res
+
+            if xs[x] == ys[y]:
+                a = S(x + 1, y + 1)
+                res = set(xs[x] + s for s in a)
+            else:
+                a1 = S(x, y + 1)
+                e1 = a1.pop()
+                a1.add(e1)
+
+                a2 = S(x + 1, y)
+                e2 = a2.pop()
+                a2.add(e2)
+
+                if len(e1) > len(e2):
+                    res = a1
+                elif len(e1) < len(e2):
+                    res = a2
+                else:
+                    res = a1.union(a2)
+
+            cache[key] = res
+            return res
+
+        return S(0, 0)
+
+    assert lcs_all('a', '') == {''}
+    assert lcs_all('a', 'a') == {'a'}
+    assert lcs_all('ab', 'aba') == {'ab'}
+    assert lcs_all('abab', 'xbaxba') == {'aba', 'bab'}
+    assert lcs_all('XMJYAUZ', 'MZJAWXU') == {'MJAU'}
+    assert lcs_all('ABCBDAB', 'BDCABA') == {'BCAB', 'BCBA', 'BDAB'}
+
+
 #
 
 #
