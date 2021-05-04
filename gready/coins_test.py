@@ -48,13 +48,14 @@ def iterative0(cs: list, a: int) -> int:
                 tb[ci][ai] = 1
                 continue
 
-            # the last coin
+            # coins are empty
             if ci == 0:
+                # first coin == amount
                 tb[ci][ai] = 1 if ai % cs[ci] == 0 else 0
             else:
+                # solution = solution_without_coint + solution_with_coin
                 tb[ci][ai] = tb[ci - 1][ai] + tb[ci][ai - cs[ci]]
 
-    # print(tb)
     return tb[len(cs) - 1][a]
 
 
@@ -67,6 +68,37 @@ def test_iterative0():
     assert got == 5
 
 
+def iterative1(cs: list, amount: int) -> int:
+    tb = [[0] * (amount + 1) for _ in range(len(cs) + 1)]
+
+    for ci in range(len(tb)):
+        for ai in range(amount + 1):
+
+            # if amount == 0 solution is 1 for any cs
+            if ai == 0:
+                tb[ci][ai] = 1
+                continue
+
+            # coins are empty
+            if ci == 0:
+                # tb[ci][ai] = 1 if ai % cs[ci] == 0 else 0
+                tb[ci][ai] = 0
+            else:
+                tb[ci][ai] = tb[ci - 1][ai] + tb[ci][ai - cs[ci - 1]]
+
+    print(tb)
+    return tb[len(cs)][amount]
+
+
+def test_iterative1():
+    got = iterative1((1, 2), 3)
+    assert got == 2
+    got = iterative1((1, 2, 3), 4)
+    assert got == 4
+    got = iterative1((2, 5, 3, 6), 10)
+    assert got == 5
+
+
 def recursive(cs: list, amount: int) -> int:
     if amount == 0:
         return 1
@@ -74,6 +106,17 @@ def recursive(cs: list, amount: int) -> int:
         return 0
 
     return recursive(cs, amount - cs[0]) + recursive(cs[1:], amount)
+
+
+# def recursive(cs: list, amount: int) -> int:
+#     if amount == 0:
+#         return ?
+#     if amount < 0 or len(cs) < 1:
+#         return ?
+
+#     with_coin = recursive(cs, amount - ?)
+#     without_coin = recursive(cs[1:], ?)
+#     return without_coin + without_coin
 
 
 def test_recursive():

@@ -102,4 +102,73 @@ def test_reduce():
     assert rmax(['a', 'abab', 'ba', 'bbbc'], key=key_b) == 'bbbc'
 
 
+def test_func_attr():
+    # if object has method __setattr__
+    # you may add attributes to it
+    class A:
+        pass
+
+    o = A()
+    # you may add attributes to object
+    o.a = 1
+    assert o.a == 1
+
+    # but not plain python object
+    # error
+    # o = object()
+    # o.a = 1
+    # assert o.a == 1
+
+    # function is an object with __setattr__
+    def f_normal(x):
+        a = 1
+        return a + x
+
+    assert f_normal(2) == 3
+
+    # error
+    # assert f_normal.a == 1
+
+    def f_ugly(x):
+        f_ugly.a = 1
+        return f_ugly.a + x
+
+    assert f_ugly(2) == 3
+    assert f_ugly.a == 1
+
+    def f_bad(x):
+        return f_bad.a + x
+
+    # would through Error
+    # assert f_bad(2) == 2
+
+    # but if you define
+    f_bad.a = 3
+    assert f_bad(2) == 5
+    assert f_bad.a == 3
+
+
+def test_question():
+    def c(sequence):
+        c.items = 0
+        c.starts += 1
+        for item in sequence:
+            c.items += 1
+            yield item
+
+    c.starts = 0
+
+    xs1 = [x for x in c(range(3))]
+    assert xs1 == [0, 1, 2]
+    assert c.items == 3
+    assert c.starts == 1
+
+    xs2 = [x for x in c(range(3))]
+    assert xs2 == [0, 1, 2]
+    assert c.items == 3
+    assert c.starts == 2
+
+
+#
+
 #
