@@ -3,6 +3,7 @@
 
 # https://www.geeksforgeeks.org/longest-common-substring-dp-29/
 
+from functools import lru_cache
 from typing import Generator
 
 
@@ -51,16 +52,26 @@ def lcs(xs: str, ys: str) -> int:
     """dynamic solution"""
     n = len(xs)
     m = len(ys)
+    cache = {}
 
     def S(i: int, j: int) -> int:
 
         if i >= n or j >= m:
             return 0
+        key = str(i) + ':' + str(j)
+        res = cache.get(key)
+        if res:
+            return res
+
         if xs[i] == ys[j]:
             if i < n - 1 and j < m - 1 and xs[i + 1] == ys[j + 1]:
-                return 1 + S(i + 1, j + 1)
-            return 1
-        return max(S(i + 1, j), S(i, j + 1))
+                res = 1 + S(i + 1, j + 1)
+            else:
+                res = 1
+        else:
+            res = max(S(i + 1, j), S(i, j + 1))
+        cache[key] = res
+        return res
 
     return S(0, 0)
 
@@ -71,6 +82,34 @@ def test_lcs():
     assert lcs('abcd', 'xbcdy') == 3
     assert lcs('abcdxyz', 'xyzabcd') == 4
     assert lcs('zxabcdezy', 'yzabcdezx') == 6
+
+
+def lcs1(xs: str, ys: str) -> int:
+    """dynamic solution"""
+    n = len(xs)
+    m = len(ys)
+
+    @lru_cache()
+    def S(i: int, j: int) -> int:
+
+        if i >= n or j >= m:
+            return 0
+
+        if xs[i] == ys[j]:
+            if i < n - 1 and j < m - 1 and xs[i + 1] == ys[j + 1]:
+                return 1 + S(i + 1, j + 1)
+            return 1
+        return max(S(i + 1, j), S(i, j + 1))
+
+    return S(0, 0)
+
+
+def test_lcs1():
+    assert lcs1('a', '') == 0
+    assert lcs1('ab', 'bc') == 1
+    assert lcs1('abcd', 'xbcdy') == 3
+    assert lcs1('abcdxyz', 'xyzabcd') == 4
+    assert lcs1('zxabcdezy', 'yzabcdezx') == 6
 
 
 #
