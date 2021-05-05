@@ -157,6 +157,11 @@ def test_lcs_all_cache():
 
         cache = {}
 
+        def peek(s: set) -> object:
+            e = s.pop()
+            s.add(e)
+            return e
+
         def S(x, y) -> 'set[str]':
             if x >= len(xs) or y >= len(ys):
                 return {''}
@@ -171,12 +176,10 @@ def test_lcs_all_cache():
                 res = set(xs[x] + s for s in a)
             else:
                 a1 = S(x, y + 1)
-                e1 = a1.pop()
-                a1.add(e1)
+                e1 = peek(a1)
 
                 a2 = S(x + 1, y)
-                e2 = a2.pop()
-                a2.add(e2)
+                e2 = peek(a2)
 
                 if len(e1) > len(e2):
                     res = a1
