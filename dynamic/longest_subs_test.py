@@ -36,8 +36,31 @@ def lcs_tbl(xs: str, ys: str) -> int:
 
 
 def lcs_palindrome(xs: str) -> int:
-    ys = list(reversed(xs))
-    return lcs_tbl(xs, ys)
+    # ys = list(reversed(xs))
+    # return lcs_tbl(xs, ys)
+
+    cache = {}
+
+    def f(i, j) -> int:
+        if i > j:
+            return 0
+        if i == j:
+            return 1
+
+        key = str(i) + ':' + str(j)
+        res = cache.get(key)
+        if res:
+            return res
+
+        if xs[i] == xs[j]:
+            res = 2 + f(i + 1, j - 1)
+        else:
+            res = max(f(i + 1, j), f(i, j - 1))
+
+        cache[key] = res
+        return res
+
+    return f(0, len(xs) - 1)
 
 
 # return lcs_palindrome(s)
@@ -60,6 +83,7 @@ def test_lcs():
 
 
 def test_lcs_palindrome():
+    assert lcs_palindrome('a') == 1
     assert lcs_palindrome('abca') == 3
     assert lcs_palindrome('cbbd') == 2
     assert lcs_palindrome('bbbab') == 4
